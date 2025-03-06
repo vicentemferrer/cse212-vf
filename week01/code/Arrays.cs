@@ -13,7 +13,21 @@ public static class Arrays
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return []; // replace this return statement with your own
+        // Step 1: Create an array with length required
+        double[] results = new double[length];
+
+        // Step 2: Create a for loop
+        for (int i = 0; i < length; i++) {
+
+            // Step 3: Get the multiple
+            double multiple = number * (i + 1);
+
+            // Step 4: Store multiple in respective position
+            results[i] = multiple;
+        }
+        
+        // Step 5: Return array
+        return results; // replace this return statement with your own
     }
 
     /// <summary>
@@ -29,5 +43,17 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+
+        // Step 1: Get main index
+        int mI = data.Count - amount;
+
+        // Step 2: Get range
+        int[] range = data.GetRange(mI, amount).ToArray();
+
+        // Step 3: Delete range
+        data.RemoveRange(mI, amount);
+
+        // Step 4: Insert range
+        data.InsertRange(0, range);
     }
 }
