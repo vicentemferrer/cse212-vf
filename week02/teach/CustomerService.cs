@@ -11,24 +11,70 @@ public class CustomerService {
         // Test Cases
 
         // Test 1
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: The user shall specify the maximum size of the 
+        // Customer Service Queue when it is created. If the size is invalid 
+        // (less than or equal to 0) then the size shall default to 10. 
+        // Expected Result: 10
         Console.WriteLine("Test 1");
 
-        // Defect(s) Found: 
+        CustomerService cServ = new CustomerService(-2);
+
+        Console.WriteLine(cServ._maxSize);
+
+        // Defect(s) Found: No defects found.
 
         Console.WriteLine("=================");
 
         // Test 2
-        // Scenario: 
-        // Expected Result: 
+        // Scenario: The AddNewCustomer method shall enqueue a new customer into the queue.
+        // Expected Result: 1
         Console.WriteLine("Test 2");
 
-        // Defect(s) Found: 
+        cServ.AddNewCustomer();
+
+        Console.WriteLine(cServ._queue.Count);
+
+        // Defect(s) Found: No defects found.
 
         Console.WriteLine("=================");
 
-        // Add more Test Cases As Needed Below
+        // Test 3
+        // Scenario: If the queue is full when trying to add a customer, then an error message will be displayed.
+        // Expected Result: Maximum Number of Customers in Queue.
+        Console.WriteLine("Test 3");
+
+        // CustomerService cServ2 = new CustomerService(2);
+
+        // for (int i = 0; i <= cServ2._maxSize; i++) {
+        //     cServ2.AddNewCustomer();
+        // }
+
+        // Defect(s) Found: AddNewCustomer exceed the _maxSize and after acts as expected.
+
+        Console.WriteLine("=================");
+
+        // Test 4
+        // Scenario: The ServeCustomer function shall dequeue the next customer from the 
+        // queue and display the details.
+        // Expected Result: Frank (1234) : His car
+        Console.WriteLine("Test 4");
+
+        cServ.ServeCustomer();
+
+        // Defect(s) Found: No customer details are displayed (OutOfRangeException), 
+        // because the customer is retrieved after being deleted.
+
+        Console.WriteLine("=================");
+
+        // Test 5
+        // Scenario: If the queue is empty when trying to serve a customer, 
+        // then an error message will be displayed.
+        // Expected Result: Cannot serve an empty customers list.
+        Console.WriteLine("Test 5");
+
+        cServ.ServeCustomer();
+
+        // Defect(s) Found: There was not an handling case for this scenario in ServeCustomer method.
     }
 
     private readonly List<Customer> _queue = new();
@@ -67,7 +113,7 @@ public class CustomerService {
     /// </summary>
     private void AddNewCustomer() {
         // Verify there is room in the service queue
-        if (_queue.Count > _maxSize) {
+        if (_queue.Count >= _maxSize) {
             Console.WriteLine("Maximum Number of Customers in Queue.");
             return;
         }
@@ -88,8 +134,13 @@ public class CustomerService {
     /// Dequeue the next customer and display the information.
     /// </summary>
     private void ServeCustomer() {
-        _queue.RemoveAt(0);
+        if (_queue.Count <= 0) {
+            Console.WriteLine("Cannot serve an empty customers list.");
+            return;
+        }
+
         var customer = _queue[0];
+        _queue.RemoveAt(0);
         Console.WriteLine(customer);
     }
 
