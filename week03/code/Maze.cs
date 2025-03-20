@@ -33,6 +33,17 @@ public class Maze
     public void MoveLeft()
     {
         // FILL IN CODE
+
+        // Get current position options
+        var currPosition = _mazeMap[(_currX, _currY)];
+
+        // Throw InvalidOperationException if I cannot move to left
+        if (!currPosition[0]) {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        // If no error is thrown, then substract 1 unit to _currX (move to left)
+        _currX -= 1;
     }
 
     /// <summary>
@@ -42,6 +53,17 @@ public class Maze
     public void MoveRight()
     {
         // FILL IN CODE
+
+        // Get current position options
+        var currPosition = _mazeMap[(_currX, _currY)];
+
+        // Throw InvalidOperationException if I cannot move to right
+        if (!currPosition[1]) {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        // If no error is thrown, then add 1 unit to _currX (move to right)
+        _currX += 1;
     }
 
     /// <summary>
@@ -51,6 +73,17 @@ public class Maze
     public void MoveUp()
     {
         // FILL IN CODE
+
+        // Get current position options
+        var currPosition = _mazeMap[(_currX, _currY)];
+
+        // Throw InvalidOperationException if I cannot move up
+        if (!currPosition[2]) {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        // If no error is thrown, then substract 1 unit to _currY (move up)
+        _currY -= 1;
     }
 
     /// <summary>
@@ -60,6 +93,17 @@ public class Maze
     public void MoveDown()
     {
         // FILL IN CODE
+
+        // Get current position options
+        var currPosition = _mazeMap[(_currX, _currY)];
+
+        // Throw InvalidOperationException if I cannot move down
+        if (!currPosition[3]) {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+        // If no error is thrown, then add 1 unit to _currY (move down)
+        _currY += 1;
     }
 
     public string GetStatus()

@@ -184,6 +184,14 @@ public static class SetsAndMaps
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
         // 3. Return an array of these string descriptions.
-        return [];
+
+        // Create a collection to store output strings
+        var summary = new List<string>();
+
+        // Loop on features array inside featurCollection pushing format array into summary
+        Array.ForEach(featureCollection.features, (Feature feature) => summary.Add($"{feature.properties.place} - Mag {feature.properties.mag}"));
+
+        // Return summary turned into array
+        return summary.ToArray();
     }
 }
