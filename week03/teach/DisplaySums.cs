@@ -31,6 +31,7 @@
         // TODO Problem 2 - This should print pairs of numbers in the given array
 
         var prevValues = new HashSet<int>();
+        
         foreach (var n in numbers)
         {
             if (prevValues.Contains(10 - n)) {

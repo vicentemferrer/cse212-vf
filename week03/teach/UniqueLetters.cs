@@ -27,5 +27,9 @@
         }
 
         return uniqueSet.Count == text.Length;
+
+        // var unique = new HashSet<char>(text.ToCharArray());
+
+        // return unique.Count == text.Length;
     }
 }
