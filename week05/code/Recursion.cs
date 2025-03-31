@@ -15,7 +15,12 @@ public static class Recursion
     public static int SumSquaresRecursive(int n)
     {
         // TODO Start Problem 1
-        return 0;
+        
+        // Set base case
+        if (n <= 0) return 0;
+
+        // Retrieve n^2 and call the function itself again with (n - 1)
+        return (n * n) + SumSquaresRecursive(n - 1);
     }
 
     /// <summary>
@@ -40,6 +45,20 @@ public static class Recursion
     public static void PermutationsChoose(List<string> results, string letters, int size, string word = "")
     {
         // TODO Start Problem 2
+        
+        // Set base case
+        if(word.Length == size) {
+            results.Add(word);
+            return;
+        }
+
+        // Handle else case
+        for (var i = 0; i < letters.Length; i++)
+        {
+            var lettersLeft = letters.Remove(i, 1);
+
+            PermutationsChoose(results, lettersLeft, size, word + letters[i]);
+        }
     }
 
     /// <summary>
@@ -98,9 +117,22 @@ public static class Recursion
 
         // TODO Start Problem 3
 
-        // Solve using recursion
-        decimal ways = CountWaysToClimb(s - 1) + CountWaysToClimb(s - 2) + CountWaysToClimb(s - 3);
-        return ways;
+        // Set dictionary for memoization
+        if (remember == null) {
+            remember = new();
+        }
+
+        // Check case presence
+        if (remember.ContainsKey(s)) {
+            return remember[s];
+        } else {
+            // Solve using recursion
+            decimal ways = CountWaysToClimb(s - 1, remember) + CountWaysToClimb(s - 2, remember) + CountWaysToClimb(s - 3, remember);
+            
+            remember[s] = ways;
+
+            return ways;
+        }
     }
 
     /// <summary>
