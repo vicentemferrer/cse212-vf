@@ -151,6 +151,28 @@ public static class Recursion
     public static void WildcardBinary(string pattern, List<string> results)
     {
         // TODO Start Problem 4
+
+        // Set wildCard expected
+        char wildcard = '*';
+
+        // Set base case: if no wildcard in pattern add to list
+        if (!pattern.Contains(wildcard)) {
+            results.Add(pattern);
+            return;
+        }
+
+        // Get first pattern ocurrence index
+        int wCP = pattern.IndexOf(wildcard);
+
+        // Iterate with binary loop. Replace current wildcard index with 0 or 1.
+        // Send new pattern with results array.
+        for (int i = 0; i < 2; i++) {
+            string newPattern = pattern[..wCP] + i.ToString();
+
+            if (!(wCP + 1 == pattern.Length)) newPattern += pattern[(wCP + 1)..];
+
+            WildcardBinary(newPattern, results);
+        }
     }
 
     /// <summary>
@@ -162,14 +184,35 @@ public static class Recursion
         // If this is the first time running the function, then we need
         // to initialize the currPath list.
         if (currPath == null) {
-            currPath = new List<ValueTuple<int, int>>();
+            currPath = new List<ValueTuple<int, int>>() {(0, 0)};
         }
-        
-        // currPath.Add((1,2)); // Use this syntax to add to the current path
 
         // TODO Start Problem 5
-        // ADD CODE HERE
+        
+        // Set current valid position
+        if (!(x == 0 && y == 0)) currPath.Add((x,y));
+        
+        // Check for maze end to add a solution
+        if (maze.IsEnd(x,y)){
+            results.Add(currPath.AsString());
+            return;
+        }
 
-        // results.Add(currPath.AsString()); // Use this to add your path to the results array keeping track of complete maze solutions when you find the solution.
+        // Set default moves
+        List<(int, int)> moves = new(){ (1,0), (0,1), (-1,0), (0,-1), };
+
+        int prevResultsLength = results.Count;
+
+        // Check for valid move and start next execution
+        foreach ((int dX, int dY) move in moves) {
+            int aprX = x + move.dX;
+            int aprY = y + move.dY;
+
+            if(maze.IsValidMove(currPath, aprX, aprY)){
+                SolveMaze(results, maze, aprX, aprY, prevResultsLength == results.Count ? currPath : null);
+            }
+        }
+
+        currPath.RemoveAt(currPath.Count - 1);
     }
 }
